@@ -6,14 +6,16 @@ Just run ScreenServer.jar in your pc, create the class in your android project a
 send to your pc
 
 
-    object NetClientTool {
+    object NetClientTool 
+    
+        class ImageHolder(val image: Bitmap)
+        data class Request(val name: String, val holder : ImageHolder){}
     
         val gson = GsonBuilder()
             .registerTypeHierarchyAdapter(Bitmap::class.java, RenderedImageTypeAdapter())
             .create()
             
-    class ImageHolder(val image: Bitmap)
-    data class Request(val name: String, val holder : ImageHolder){}
+
 
         fun screen(context : Activity)  {
             val image: Bitmap
