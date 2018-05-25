@@ -47,12 +47,14 @@ object NetClientTool {
             return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
         }
     }
-
-}
-
+    
+    
   class ImageHolder(val image: Bitmap)
     data class Request(val name: String,
                        val holder : ImageHolder)
+
+}
+
                        
     val gson = GsonBuilder()
             .registerTypeHierarchyAdapter(Bitmap::class.java, RenderedImageTypeAdapter())
