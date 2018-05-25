@@ -17,7 +17,7 @@ send to your pc
             
 
 
-        fun screen(context : Activity)  {
+        fun screen()  {
             val image: Bitmap
             try {
                 val client = Socket("10.0.2.2", 9999)
