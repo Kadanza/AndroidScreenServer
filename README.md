@@ -51,7 +51,7 @@ object NetClientTool {
     
   class ImageHolder(val image: Bitmap)
     data class Request(val name: String,
-                       val holder : ImageHolder)
+                       val holder : ImageHolder){}
 
 }
 
