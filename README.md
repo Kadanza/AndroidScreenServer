@@ -7,9 +7,6 @@ send to your pc
 
 
 object NetClientTool {
-
-  
-            
     fun screen(context : Activity)  {
         val image: Bitmap
         try {
@@ -54,10 +51,10 @@ object NetClientTool {
 }
 
                        
-    val gson = GsonBuilder()
+val gson = GsonBuilder()
             .registerTypeHierarchyAdapter(Bitmap::class.java, RenderedImageTypeAdapter())
             .create()
             
-             class ImageHolder(val image: Bitmap)
+class ImageHolder(val image: Bitmap)
     data class Request(val name: String,
                        val holder : ImageHolder){}
