@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_clientserver" default="compile.module.clientserver">
+  <dirname property="module.clientserver.basedir" file="${ant.file.module_clientserver}"/>
+  
+  <property name="module.jdk.home.clientserver" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.clientserver" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.clientserver" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.clientserver" value="-encoding UTF-8 -source 10 -target 10 ${compiler.args}"/>
+  
+  <property name="clientserver.output.dir" value="${module.clientserver.basedir}/out/production/ClientServer"/>
+  <property name="clientserver.testoutput.dir" value="${module.clientserver.basedir}/out/test/ClientServer"/>
+  
+  <path id="clientserver.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="clientserver.module.production.classpath">
+    <path refid="${module.jdk.classpath.clientserver}"/>
+    <path refid="library.kotlinjavaruntime.classpath"/>
+    <path refid="library.com.google.code.gson:gson:2.8.5.classpath"/>
+  </path>
+  
+  <path id="clientserver.runtime.production.module.classpath">
+    <pathelement location="${clientserver.output.dir}"/>
+    <path refid="library.kotlinjavaruntime.classpath"/>
+    <path refid="library.com.google.code.gson:gson:2.8.5.classpath"/>
+  </path>
+  
+  <path id="clientserver.module.classpath">
+    <path refid="${module.jdk.classpath.clientserver}"/>
+    <pathelement location="${clientserver.output.dir}"/>
+    <path refid="library.kotlinjavaruntime.classpath"/>
+    <path refid="library.com.google.code.gson:gson:2.8.5.classpath"/>
+  </path>
+  
+  <path id="clientserver.runtime.module.classpath">
+    <pathelement location="${clientserver.testoutput.dir}"/>
+    <pathelement location="${clientserver.output.dir}"/>
+    <path refid="library.kotlinjavaruntime.classpath"/>
+    <path refid="library.com.google.code.gson:gson:2.8.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.clientserver">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.clientserver">
+    <patternset refid="excluded.from.module.clientserver"/>
+  </patternset>
+  
+  <path id="clientserver.module.sourcepath">
+    <dirset dir="${module.clientserver.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.clientserver" depends="compile.module.clientserver.production,compile.module.clientserver.tests" description="Compile module ClientServer"/>
+  
+  <target name="compile.module.clientserver.production" depends="register.custom.compilers" description="Compile module ClientServer; production classes">
+    <mkdir dir="${clientserver.output.dir}"/>
+    <javac2 destdir="${clientserver.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.clientserver}/javac">
+      <compilerarg line="${compiler.args.clientserver}"/>
+      <bootclasspath refid="clientserver.module.bootclasspath"/>
+      <classpath refid="clientserver.module.production.classpath"/>
+      <src refid="clientserver.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.clientserver"/>
+    </javac2>
+    
+    <copy todir="${clientserver.output.dir}">
+      <fileset dir="${module.clientserver.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.clientserver.tests" depends="register.custom.compilers,compile.module.clientserver.production" description="compile module ClientServer; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.clientserver" description="cleanup module">
+    <delete dir="${clientserver.output.dir}"/>
+    <delete dir="${clientserver.testoutput.dir}"/>
+  </target>
+</project>
