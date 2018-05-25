@@ -49,9 +49,7 @@ object NetClientTool {
     }
     
     
-  class ImageHolder(val image: Bitmap)
-    data class Request(val name: String,
-                       val holder : ImageHolder){}
+ 
 
 }
 
@@ -59,3 +57,7 @@ object NetClientTool {
     val gson = GsonBuilder()
             .registerTypeHierarchyAdapter(Bitmap::class.java, RenderedImageTypeAdapter())
             .create()
+            
+             class ImageHolder(val image: Bitmap)
+    data class Request(val name: String,
+                       val holder : ImageHolder){}
