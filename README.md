@@ -6,36 +6,36 @@ Just run ScreenServer.jar in your pc, create the class in your android project a
 send to your pc
 
 
-object NetClientTool {
+    object NetClientTool {
 
-    fun screen(context : Activity)  {
-        val image: Bitmap
-        try {
-            val client = Socket("10.0.2.2", 9999)
-            val capture = Screenshot.capture()
-            image =  capture.bitmap
-            val holder = ImageHolder(image)
-            val request = Request( "screens/android.png" ,  holder)
+        fun screen(context : Activity)  {
+            val image: Bitmap
+            try {
+                val client = Socket("10.0.2.2", 9999)
+                val capture = Screenshot.capture()
+                image =  capture.bitmap
+                val holder = ImageHolder(image)
+                val request = Request( "screens/android.png" ,  holder)
 
-            val json = gson.toJson(request)
-            val output = client.outputStream
-            output.write(json.toByteArray())
-            client.close()
+                val json = gson.toJson(request)
+                val output = client.outputStream
+                output.write(json.toByteArray())
+                client.close()
 
 
-        }catch (e : Exception){
-            w("", e)
+            }catch (e : Exception){
+                w("", e)
+            }
         }
-    }
 
-    internal class RenderedImageTypeAdapter : TypeAdapter<Bitmap>() {
-        @Throws(IOException::class)
-        override fun write(out: JsonWriter, image: Bitmap) {
-            val baos = ByteArrayOutputStream()
-            image.compress(Bitmap.CompressFormat.PNG, 100, baos)
-            val b = baos.toByteArray()
-            val imageBase64 = android.util.Base64.encodeToString(b, android.util.Base64.NO_WRAP)
-            out.value(imageBase64)
+        internal class RenderedImageTypeAdapter : TypeAdapter<Bitmap>() {
+            @Throws(IOException::class)
+            override fun write(out: JsonWriter, image: Bitmap) {
+                val baos = ByteArrayOutputStream()
+                image.compress(Bitmap.CompressFormat.PNG, 100, baos)
+                val b = baos.toByteArray()
+                val imageBase64 = android.util.Base64.encodeToString(b, android.util.Base64.NO_WRAP)
+                out.value(imageBase64)
         }
 
         @Throws(IOException::class)
@@ -49,7 +49,7 @@ object NetClientTool {
     
  
 
-}
+    }
 
                        
     val gson = GsonBuilder()
@@ -57,5 +57,5 @@ object NetClientTool {
             .create()
             
      class ImageHolder(val image: Bitmap)
-    data class Request(val name: String,
-                       val holder : ImageHolder){}
+        data class Request(val name: String,
+                           val holder : ImageHolder){}
