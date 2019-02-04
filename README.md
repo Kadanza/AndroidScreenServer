@@ -1,7 +1,7 @@
 # AndroidScreenServer
 
 
-A simple channel for transferring screenshoots from your anroid device to your computer. 
+A simple channel for transferring screenshoots from your android device to your computer. 
 Just run ScreenServer.jar in your pc, create the class in your android project and use method screen() to get image and
 send to your pc
 
